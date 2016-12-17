@@ -1,0 +1,89 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(shiny)
+library(shinyjs)
+library(parcoords)
+library(data.table)
+library(dplyr)
+library(dtplyr)
+library(DT)
+library(ggplot2)
+```
+
+parcoords
+=======================================================================
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+
+myData <- data.table(iris)
+
+output$parcoords_out <-  renderParcoords({
+
+#data( diamonds, package = "ggplot2" )
+parcoords(
+  myData,
+  , rownames = F # turn off rownames from the data.frame
+  , brushMode = "1D-axes-multi"
+  , queue = T
+)})
+
+
+parcoordsOutput("parcoords_out", width = "500px", height = "300px" )
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+ output$myTable <- renderDataTable({
+   
+    rows <- if(length(input$parcoords_out_brushed_row_names) > 0) {
+        input$parcoords_out_brushed_row_names
+      } else {
+        rownames(myData)
+      }
+    
+    myData[as.integer(rows),]
+    
+    })
+
+
+ dataTableOutput('myTable')
+```
+
+
+
+```{r,eval = F}
+utput$iris_selected = renderPlot({
+      rows <- if(length(input$parcoords_out_brushed_row_names) > 0) {
+        input$parcoords_out_brushed_row_names
+      } else {
+        rownames(iris)
+      }
+      
+
+```
+
+
+
+```{r child = 'geom-child.Rmd'}
+```
+
+
