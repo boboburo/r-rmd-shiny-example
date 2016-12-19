@@ -52,7 +52,7 @@ Column {data-width=350}
 ### Chart B
 
 ```{r}
- output$myTable <- renderDataTable({
+ output$table_out <- renderDataTable({
    
     rows <- if(length(input$parcoords_out_brushed_row_names) > 0) {
         input$parcoords_out_brushed_row_names
@@ -65,25 +65,10 @@ Column {data-width=350}
     })
 
 
- dataTableOutput('myTable')
+ dataTableOutput('table_out')
 ```
 
 
 
-```{r,eval = F}
-utput$iris_selected = renderPlot({
-      rows <- if(length(input$parcoords_out_brushed_row_names) > 0) {
-        input$parcoords_out_brushed_row_names
-      } else {
-        rownames(iris)
-      }
-      
-
-```
-
-
-
-```{r child = 'geom-child.Rmd'}
-```
 
 
