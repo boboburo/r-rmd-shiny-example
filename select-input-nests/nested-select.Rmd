@@ -22,5 +22,7 @@ selectInput("country", "Select country", list(
   "North America" = c("Canada", "United States" = "USA")
 ))
 
+# Just put in a comment
+
 ```
 
